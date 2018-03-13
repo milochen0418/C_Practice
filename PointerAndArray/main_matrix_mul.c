@@ -11,8 +11,6 @@
 
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 int matrix_get(int rows, int cols, int* matrix, int i, int j);
 //For the matrix with size = rows x cols, we get val from the (i,j) position in matrix.
@@ -81,6 +79,11 @@ int main() {
 			matrix_set(m,p,C,i,j,C_ij);
 		}
 	}
+	
+	//print the result of matrix A
+	print_matrix(m,n,A,"A");
+	//print the result of matrix B
+	print_matrix(n,p,B,"B");
 	//print the result of matrix C
 	print_matrix(m,p,C,"C");
 
