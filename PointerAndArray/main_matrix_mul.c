@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define DEBUG 
+
 int matrix_get(int rows, int cols, int* matrix, int i, int j);
 //For the matrix with size = rows x cols, we get val from the (i,j) position in matrix.
 
@@ -39,91 +39,40 @@ int main() {
 		C is matrix with m * p size
 		A is matrix with m * n size
 		B is matrix with n * p size
-
 	*/
 
 	int m, n, p; 
-	int *C;//matrix C 
 	int *A;//matrix A
-	int *B;//matrix B
+	int *B;//matrix B	
+	int *C;//matrix C 
 
 	printf("sizeof(int*) = %lu\n", sizeof(int*));
 	printf("sizeof(int) = %lu\n", sizeof(int));
 
-
-	//input the size of m , n &p 
+	//input the size of m , n & p 
 	matrix_size_input_procedure(&m,&n,&p);
-	printf("After matrix_size_input(), (m,n,p) = (%d,%d,%d)\n", m,n,p);
-	//dynamic allocate the memory space for the matrix
-	//
+
+	A=(int*)malloc(sizeof(int)*(m*n));
 	B=(int*)malloc(sizeof(int)*(n*p));
-	//C=(int*)malloc(sizeof(int)*(m*p));
-	//A=(int*)malloc(sizeof(int)*(m*n));
-	printf("new allocated address B = %p\n", B);
-/*
-	printf("(m,n,p) = (%d,%d,%d)\n",m,n,p );
-	printf("A = %p\n", A);
-	printf("&A[%d] = %p\n", m*n, &A[m*n]);
-	printf("B = %p\n", B);
-	printf("&B[%d] = %p\n", n*p, &B[n*p]);
-	printf("C = %p\n", C);
-	printf("&C[%d] = %p\n", m*p, &C[m*p]);
-	printf("B-A = %ld\n", B-A);
-	printf("C-B = %ld\n", C-B);
-*/
-
-
-/*
-	printf("&A[0] = %p\n", &A[0]);
-	printf("&A[1] = %p\n", &A[1]);
-
-
-	print_matrix(3,3,A,"A");
-*/	
+	C=(int*)malloc(sizeof(int)*(m*p));
 	
-	//Let user to input matrix A 
 
-#if 0
-	#ifdef DEBUG
-		printf("after input_procedure() start to free B");
-		free(B);
-		exit(1);
-	#endif			
-#endif
-
-	printf("(n,p,B) = (%d,%d,%p)", n,p,B);
+	//input matrix A_mn
+	matrix_cell_input_procedure(m,n,A, "A");
+	//input matrix B_np
 	matrix_cell_input_procedure(n,p,B, "B");
 
+	print_matrix(m,n,A,"A");
+	print_matrix(n,p,B,"B");
 
-	#ifdef DEBUG
-		printf("after input_procedure() start to free B\n");
-		printf("dead B address for free is %p\n", B);
-		free(B);
-		exit(1);
-	#endif			
-
-	print_matrix(3,3,A,"A");
-	print_matrix(3,1,B,"B");
-
-
-	//Let user to input matrix B
-	
-matrix_cell_input_procedure(m,n,A, "A");
-
-#if 0
-#ifdef DEBUG
-	free(A);
-	free(B);
-	free(C);
-	return 0;
-#endif
-#endif
 	//set all cell zero in matrix C.
 	matrix_set_zeros(m,p,C);
 
+	print_matrix(m,n,A,"A");
+	print_matrix(n,p,B,"B");
 
-
-	//Do the matrix multiplication : C_mp = A_mn * B_np
+	//Do the matrix multiplication : C_mp = A_mn * B_np	
+	printf("\n...Do the matrix multiplication : C_mp = A_mn * B_np ...\n");
 	int i,j,k;
 	for (i=0;i<m;i++) {
 		for(j=0;j<p;j++){
@@ -135,27 +84,14 @@ matrix_cell_input_procedure(m,n,A, "A");
 				/* The following code is just help you to debug */
 				//printf("A_%d%d=%d,\tB_%d%d=%d,\tC_%d%d = %d\n",  i,k,A_ik,  k,j,B_kj,  i,j, C_ij);
 			}
-
 			matrix_set(m,p,C,i,j,C_ij);
 		}
 	}
-	
-	//print the result of matrix A
-	print_matrix(m,n,A,"A");
-	//print the result of matrix B
-	print_matrix(n,p,B,"B");
-	//print the result of matrix C
+
 	print_matrix(m,p,C,"C");
 
-
-
-	printf("A = %p\n", A);
-	free(A); //there is some issue when release A matrix...	
-
-	printf("B = %p\n", B);
+	free(A);
 	free(B);
-
-	printf("C = %p\n", C);
 	free(C);
 
 	return 0;
@@ -163,66 +99,25 @@ matrix_cell_input_procedure(m,n,A, "A");
 
 void matrix_cell_input_procedure(int rows, int cols, int *matrix, char* matrix_name) {
 	int i, j;
-
-	printf("[matrix_cell_input_procedure()]matrix address = %p\n", matrix);
 	printf("\n Matrix %s\n", matrix_name);
-
 	for (i = 0; i < rows; i++) {
 		for (j = 0; j < cols; j++) {
-
 			int val;
 			printf("%s(%d,%d) = ", matrix_name,i,j);
 			scanf("%d", &val);
-			//matrix_set(rows, cols, matrix, i,j, val);
-			if(val != 111) {
-				printf("??? (i,rows,j,val, [i*rows+j] ) = (%d,%d,%d,%d, [%d])\n", i,rows,j,val,i*rows + j);
-				matrix[i*rows + j] = val;
-				/* 
-					This code is issue 
-					My expected is  matrix[i*cols + j]
-					but code is matrix[i*rows + j]
-				*/
-			}
-
-			#if 0
-			if(val == 111 && i == 2 && j == 0) {
-				#ifdef DEBUG
-					printf("ready to free and exit in input_procedure()");
-					free(matrix);
-					exit(1);
-				#endif			
-			}
-			#endif
-
+			matrix_set(rows, cols, matrix, i,j, val);
+			print_matrix(rows,cols,matrix,matrix_name);
 		}
 	}	 
-
-
-#if 0	
-	#ifdef DEBUG
-		free(matrix);
-		exit(1);
-	#endif			
-#endif 	
-
 }
 
 int matrix_get(int rows, int cols, int* matrix, int i, int j) {
-	return matrix[i*rows + j]; 
+	return matrix[i*cols + j]; 
 }
 
 void matrix_set(int rows, int cols, int* matrix, int i, int j, int val) {
-	matrix[i*rows + j] = val;
-
-#if 0	
-#ifdef DEBUG 	
-	print_matrix(rows, cols, matrix, "M");
-#endif //DEBUG
-#endif 
-
+	matrix[i*cols + j] = val;
 }
-
-
 
 void matrix_set_zeros(int rows, int cols, int* matrix) {
 	int i;
