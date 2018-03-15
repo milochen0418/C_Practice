@@ -27,6 +27,7 @@ char string_array[ARRAY_SIZE][MAX_LEN] = {
 	"Seven",
 	"Eight",
 };
+
 int len_array[ARRAY_SIZE];	
 
 
@@ -39,7 +40,7 @@ int main() {
 	for ( i = 0 ; i < ARRAY_SIZE; i++) {
 		int str_len = strlen(string_array[i]);
 		len_array[i] = str_len; 
-		//save info to len_array is for beautiful future 
+		//saving string length into len_array is for beautiful future 
 
 		if(str_len < min_len) {
 			min_len = str_len;
@@ -70,7 +71,6 @@ int main() {
 	}
 
 	printf("\nShow the strings with same size\n");
-	
 	int str_len;
 	for( str_len = 0; str_len < MAX_LEN ; str_len++) {
 		int repeat_cnt = 0 ; //repeat_cnt with string size = j 
@@ -89,10 +89,7 @@ int main() {
 			}
 			printf("\n");
 		} 
-
 	}
-	
-
 
 	return 0;
 }
