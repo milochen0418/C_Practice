@@ -41,7 +41,6 @@ int main() {
 		int str_len = strlen(string_array[i]);
 		len_array[i] = str_len; 
 		//saving string length into len_array is for beautiful future 
-
 		if(str_len < min_len) {
 			min_len = str_len;
 		}
@@ -52,20 +51,14 @@ int main() {
 
 	printf("\nShow the strings with minimum string size\n");
 	for ( i = 0 ; i < ARRAY_SIZE; i++) {
-		//char* str = string_array[i];
-		int str_len = len_array[i];
-		//if(strlen(str) == min_len) {
-		if(str_len == min_len) {
+		if(len_array[i] == min_len) {
 			printf("%s\n", string_array[i]);
 		}
 	}
 
 	printf("\nShow the strings with maximum string size\n");
 	for ( i = 0 ; i < ARRAY_SIZE; i++) {
-		//char* str = string_array[i];
-		int str_len = len_array[i];
-		//if(strlen(str) == max_len) {
-		if(str_len == max_len) {
+		if(len_array[i] == max_len) {
 			printf("%s\n", string_array[i]);
 		}
 	}
@@ -74,14 +67,15 @@ int main() {
 	int str_len;
 	for( str_len = 0; str_len < MAX_LEN ; str_len++) {
 		int repeat_cnt = 0 ; //repeat_cnt with string size = j 
+		int i = 0;		
+		//figure out is the string size = str_len repeating ? 
+		do {
+			if(len_array[i++] == str_len)repeat_cnt++;
+		} while(repeat_cnt < 2 && i < ARRAY_SIZE);
 
-		for (i = 0 ; i < ARRAY_SIZE; i++) {
-			if(len_array[i] == str_len)repeat_cnt++;
-		}
-
-		if(repeat_cnt >= 2 ){
+		if(repeat_cnt >= 2 ){ //if str_len is repeating, then
 			//Use for loop to show the repeat string with size = str_len
-			printf("Same string size = %d is showing \n", str_len);
+			printf("size = %d is showing \n", str_len);
 			for (i = 0 ; i < 10 ; i++) {
 				if(str_len == len_array[i]) {
 					printf("%s\t", string_array[i]);
