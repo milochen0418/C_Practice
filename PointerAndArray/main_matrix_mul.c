@@ -55,12 +55,6 @@ int main() {
 	matrix_size_input_procedure(&m,&n,&p);
 
 	//dynamic allocate the memory space for the matrix
-	/*
-	A=(int*)malloc(sizeof(int)*(m*n));
-	B=(int*)malloc(sizeof(int)*(n*p));	
-	C=(int*)malloc(sizeof(int)*(m*p));
-	*/
-
 	A=(int*)malloc(sizeof(int)*(m*n));
 	B=(int*)malloc(sizeof(int)*(n*p));
 	C=(int*)malloc(sizeof(int)*(m*p));
@@ -91,7 +85,7 @@ int main() {
 	print_matrix(3,3,A,"A");
 	print_matrix(3,1,B,"B");
 
-	
+
 	//Let user to input matrix B
 	matrix_cell_input_procedure(n,p,B, "B");
 
@@ -140,18 +134,15 @@ int main() {
 
 
 
-	//usleep(1000* 200);
-	//release the memory space
-	//printf("release A\n");
 	printf("A = %p\n", A);
 	free(A); //there is some issue when release A matrix...	
-	//printf("release B\n");
+
 	printf("B = %p\n", B);
-	//free(B);
-	//printf("release C\n");
+	free(B);
+
 	printf("C = %p\n", C);
-	//free(C);
-	//printf("release end\n");
+	free(C);
+
 	return 0;
 }
 
