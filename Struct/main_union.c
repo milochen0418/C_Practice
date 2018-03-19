@@ -46,7 +46,30 @@ Pixel get_pixel(u8 *map, int bpp, int pos) {
 	return pixel;
 }
 
+
+
+
+
 int main() {
+#if 1	
+	struct { 
+		unsigned int code1 :2;
+		unsigned int       :2;
+		unsigned int code2 :3;
+		unsigned int       :0;
+		unsigned int code3 :8;
+
+	}prcode= {0};
+
+	prcode.code1 = 0;
+	prcode.code2 = 3;
+	
+	printf("sizeof(prcode) = %d\n", sizeof(prcode));	
+	printf("prcode.code1 = %d\n", prcode.code1);
+	printf("prcode.code3=%d\n",  prcode.code3);
+#endif 
+
+	
 	Pixel pixel;
 	u8 map[]={0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
 	get_pixel(map,1,2); //0x33;
