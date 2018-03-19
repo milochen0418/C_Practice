@@ -50,7 +50,8 @@ int main()
 	printf("\nStart to send playing card \n");
 	i = 1;
 	static char info[8];
-	while ( -1 != (pos=deck_deal_send_card()) ){
+	while ( -1 != ( pos = deck_deal_send_card() ) ){
+		//repeat to send card and show card until there is no card.
 		cards_get_info(info,pos);
 		printf("[%02d]_th card = %s\n", i,info);
 		i++;
@@ -60,7 +61,7 @@ int main()
 	return 0;
 }
 
-#if 1
+
 void cards_shuffle(int shuffle_time) {
 	int i;
 	int p1,p2;
@@ -85,7 +86,6 @@ void cards_shuffle(int shuffle_time) {
 	}
 }
 
-#endif
 
 void cards_init() {
 	static char shortNames[] = {'S','H','D','C'};//SHDC
