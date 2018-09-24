@@ -108,6 +108,7 @@ int main() {
 
 void snake_loop(int kbhit_buf_size, char* buf, int* isExit) {
 	GameKey key = snake_input_process(kbhit_buf_size, buf);
+
 	/*
 		GameKey is final result of input, so there is no depdency on 
 		any type of keyboard scan code ... just need to focus on game
@@ -149,7 +150,7 @@ void snake_loop(int kbhit_buf_size, char* buf, int* isExit) {
 
 	if(key != GK_NOKEY) {
 		//fflush(stdout);
-		snake_game_viewshow();
+		//snake_game_viewshow();
 	} 
 	else {
 		//printf(".");
@@ -157,9 +158,10 @@ void snake_loop(int kbhit_buf_size, char* buf, int* isExit) {
 		game_area_draw_point(head_pos,MI_SNAKE_HEAD);
 
 		snake_game_viewshow();
+		usleep(1000 * 20);
 		//fflush(stdout);
 	}
-	usleep(1000 * 20);
+	
 }
 
 
